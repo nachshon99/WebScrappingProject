@@ -6,19 +6,26 @@ import java.util.Queue;
 public class MainScene extends JPanel {
 
     private JTextField textFieldToSearchIP;
-
+    private final ImageIcon BACK_ROUND=new ImageIcon("C:\\Users\\Shilo\\Documents\\GitHub\\WebScrappingProject\\target\\photos\\IP PROJECT.jpg.png");
+    private  JLabel labelBackRound;
+    private JLabel title;
+    private JButton searchButton;
+    private final Color SPECIFIC_ORANGE =new Color(200,130,0);
     public MainScene(int x, int y, int width, int height){
         //Settings of panel
+
         this.setBounds(x,y,width,height);
         this.setLayout(null);
-        this.setBackground(Color.CYAN);
+        this.setBackground(null);
         this.setDoubleBuffered(true);
 
 
         //Title Of Page
-        JLabel title = new JLabel("IP Countries");
-        title.setFont(new Font("arial", Font.BOLD,50));
-        title.setBounds(Window.WINDOW_WIDTH/3,Window.WINDOW_HEIGHT/4, 400,50);
+        title = new JLabel("IP Countries");
+
+        title.setFont(new Font("arial", Font.BOLD,80));
+        title.setBounds(Window.WINDOW_WIDTH/4+Window.WINDOW_WIDTH/15,Window.WINDOW_HEIGHT/4, 600,100);
+        title.setForeground(SPECIFIC_ORANGE);
         title.setVisible(true);
         this.add(title);
 
@@ -27,18 +34,24 @@ public class MainScene extends JPanel {
         this.add(textFieldToSearchIP);
 
         //Button to Search
-        JButton searchButton = new JButton("Search");
-        searchButton.setBounds(Window.WINDOW_WIDTH/2 - 35, textFieldToSearchIP.getY() + (textFieldToSearchIP.getHeight()*2), 100,50);
+        searchButton = new JButton("Search");
+        searchButton.setBounds((title.getX()+title.getWidth()/3)-10, textFieldToSearchIP.getY() + (textFieldToSearchIP.getHeight()*2), 100,50);
         searchButton.setVisible(true);
         this.add(searchButton);
+
+        labelBackRound=new JLabel(BACK_ROUND);
+        labelBackRound.setSize(width,height);
+        labelBackRound.setBounds(x,y,BACK_ROUND.getIconWidth(),BACK_ROUND.getIconHeight());
+        this.add(labelBackRound);
 
         //Click button
         searchButton.addActionListener((event) -> {
             JFrame frame = new JFrame();
             if(textFieldToSearchIP.getText().length() == 0) {
-                if(JOptionPane.showConfirmDialog(frame,"IP cannot be null","Error",JOptionPane.CLOSED_OPTION) == JOptionPane.CLOSED_OPTION);
+                if(JOptionPane.showConfirmDialog(frame,"This field cannot be empty!","Error",JOptionPane.CLOSED_OPTION) == JOptionPane.CLOSED_OPTION);
             }else {
-                System.out.println(isValidIP(textFieldToSearchIP.getText()));
+                if(isValidIP(textFieldToSearchIP.getText()));
+                JOptionPane.showConfirmDialog(frame,"the IP you type is not valid!","Wrong IP",JOptionPane.CLOSED_OPTION);
             }
         });
 
@@ -58,10 +71,10 @@ public class MainScene extends JPanel {
 
     public JTextField createJTextField(){
         JTextField textField = new JTextField();
-        textField.setBounds(290,300,250,50);
+        textField.setBounds(title.getX()+title.getWidth()/10,title.getY()+title.getHeight()*3/2,350,50);
         textField.setFont(new Font("arial",Font.BOLD,24));
-        textField.setForeground(Color.BLUE);
-        textField.setBackground(Color.lightGray);
+        textField.setForeground(Color.lightGray);
+        textField.setBackground(Color.BLACK);
         textField.setToolTipText("Enter IP");
         textField.setVisible(true);
         return textField;
