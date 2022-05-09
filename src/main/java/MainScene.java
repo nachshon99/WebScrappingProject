@@ -22,6 +22,11 @@ public class MainScene extends JPanel {
         title.setVisible(true);
         this.add(title);
 
+        //למחוק -------------
+        searchCountry();
+        //-------------
+
+
         //Text Field to enter IP
         textFieldToSearchIP = createJTextField();
         this.add(textFieldToSearchIP);
@@ -38,10 +43,18 @@ public class MainScene extends JPanel {
             if(textFieldToSearchIP.getText().length() == 0) {
                 if(JOptionPane.showConfirmDialog(frame,"IP cannot be null","Error",JOptionPane.CLOSED_OPTION) == JOptionPane.CLOSED_OPTION);
             }else {
-                System.out.println(isValidIP(textFieldToSearchIP.getText()));
+                if(isValidIP(textFieldToSearchIP.getText())){
+                    searchCountry();
+                }
             }
         });
 
+
+
+        this.setVisible(true);
+    }
+
+    public void searchCountry(){
         Thread thread = new Thread(() -> {
             try {
                 ScrappingIP scrappingIP = new ScrappingIP();
@@ -52,8 +65,6 @@ public class MainScene extends JPanel {
             }
         });
         thread.start();
-
-        this.setVisible(true);
     }
 
     public JTextField createJTextField(){
